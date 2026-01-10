@@ -6,9 +6,33 @@
 #
 
 TARGET_LINUX_KERNEL_VERSION := 6.1
-TARGET_KERNEL_DEVICE := akita
-TARGET_KERNEL_DIR := device/google/$(TARGET_KERNEL_DEVICE)-kernels/$(TARGET_LINUX_KERNEL_VERSION)
-TARGET_KERNEL_PLATFORM_SOURCE := google/gs-$(TARGET_LINUX_KERNEL_VERSION)
+
+BASE_KERNEL_PATH := device/google/akita-kernels
+
+DEFAULT_KERNEL_FOLDER := evolution
+DEFAULT_KERNEL_DIR := $(BASE_KERNEL_PATH)/$(DEFAULT_KERNEL_FOLDER)
+
+SELECTED_KERNEL_DIR :=
+ifeq ($(strip $(TARGET_KERNEL_DIR_EXT)),)
+    SELECTED_KERNEL_DIR := $(DEFAULT_KERNEL_DIR)
+    
+else
+    CANDIDATE_DIR := $(BASE_KERNEL_PATH)/$(TARGET_KERNEL_DIR_EXT)
+    ifeq ($(wildcard $(CANDIDATE_DIR)),)
+        $(warning 🛑 WARNING: Кастомная директория ядра "$(CANDIDATE_DIR)" НЕ НАЙДЕНА!)
+        $(warning ➡️ Возвращаемся к использованию пути по умолчанию: $(DEFAULT_KERNEL_DIR))
+        SELECTED_KERNEL_DIR := $(DEFAULT_KERNEL_DIR)
+        
+    else
+        SELECTED_KERNEL_DIR := $(CANDIDATE_DIR)
+    endif
+endif
+TARGET_KERNEL_DIR := $(SELECTED_KERNEL_DIR)
+
+$(warning ⚙️ KERNEL_DIR: Финальный путь к пребилдам ядра: $(TARGET_KERNEL_DIR))
+
+TARGET_BOARD_KERNEL_HEADERS := $(TARGET_KERNEL_DIR)/kernel-headers
+
 
 ifneq ($(TARGET_BOOTS_16K),true)
 PRODUCT_16K_DEVELOPER_OPTION := true
@@ -93,7 +117,8 @@ PRODUCT_PACKAGES += \
 
 # Overlays
 PRODUCT_PACKAGES += \
-    PixelDisplayServiceOverlayAkita
+    PixelDisplayServiceOverlayAkita \
+	UpdaterOverlayAkitaLeeGar
 
 # Properties
 TARGET_PRODUCT_PROP += $(DEVICE_PATH)/$(DEVICE_CODENAME)/product.prop

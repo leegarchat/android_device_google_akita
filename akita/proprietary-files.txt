@@ -18,6 +18,9 @@ product/etc/firmware/music_detector.sound_model_tflite
 product/etc/permissions/androidx.camera.extensions.impl.xml
 product/priv-app/PixelCameraServices/PixelCameraServices.apk;PRESIGNED
 
+# Camera
+product/priv-app/GoogleCamera/GoogleCamera.apk;OVERRIDES=Aperture,Camera2;PRESIGNED
+
 # Camera services
 product/etc/permissions/com.google.pixel.camera.connectivity.impl.xml
 product/etc/permissions/com.google.pixel.camera.services.cameraidremapper.impl.xml

@@ -36,5 +36,7 @@ BOARD_VENDOR_SEPOLICY_DIRS += \
 
 # WiFi
 include $(DEVICE_PATH)/wifi/BoardConfig-wifi.mk
+include $(DEVICE_PATH)/$(TARGET_BOOTLOADER_BOARD_NAME)/BoardConfigEvolution.mk
 
 include $(VENDOR_PATH)/BoardConfigVendor.mk
+
