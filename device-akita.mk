@@ -19,8 +19,6 @@ ifeq ($(strip $(TARGET_KERNEL_DIR_EXT)),)
 else
     CANDIDATE_DIR := $(BASE_KERNEL_PATH)/$(TARGET_KERNEL_DIR_EXT)
     ifeq ($(wildcard $(CANDIDATE_DIR)),)
-        $(warning 🛑 WARNING: Кастомная директория ядра "$(CANDIDATE_DIR)" НЕ НАЙДЕНА!)
-        $(warning ➡️ Возвращаемся к использованию пути по умолчанию: $(DEFAULT_KERNEL_DIR))
         SELECTED_KERNEL_DIR := $(DEFAULT_KERNEL_DIR)
         
     else
@@ -28,8 +26,6 @@ else
     endif
 endif
 TARGET_KERNEL_DIR := $(SELECTED_KERNEL_DIR)
-
-$(warning ⚙️ KERNEL_DIR: Финальный путь к пребилдам ядра: $(TARGET_KERNEL_DIR))
 
 TARGET_BOARD_KERNEL_HEADERS := $(TARGET_KERNEL_DIR)/kernel-headers
 
