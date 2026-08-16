@@ -11,6 +11,8 @@ $(call inherit-product, vendor/lineage/config/common_full_phone.mk)
 DEVICE_CODENAME := akita
 DEVICE_PATH := device/google/akita
 VENDOR_PATH := vendor/google/akita
+$(call inherit-product, device/google/zuma/evolution_common.mk)
+$(call inherit-product, $(DEVICE_PATH)/$(DEVICE_CODENAME)/device-evolution.mk)
 $(call inherit-product, $(DEVICE_PATH)/aosp_$(DEVICE_CODENAME).mk)
 
 # Device identifier. This must come after all inclusions
